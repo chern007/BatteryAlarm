@@ -9,7 +9,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.BatteryManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +52,7 @@ public class Inicio extends AppCompatActivity {
         @Override
         public void onReceive(Context ctxt, Intent intent) {
             int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-            batteryTxt.setText(String.valueOf(level) + "%");
+            batteryTxt.setText("Nivel de Bateria actual: " + String.valueOf(level) + "%");
 
         }
     };
@@ -69,6 +71,12 @@ public class Inicio extends AppCompatActivity {
 
         Toast.makeText(this, lista.get(0), Toast.LENGTH_LONG).show();
 
+    }
+
+    public void configurar(View view) {
+        Intent configura = new Intent(this, Configuracion.class);
+
+        startActivity(configura);
     }
 
 }
