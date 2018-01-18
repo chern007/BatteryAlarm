@@ -46,8 +46,10 @@ public class Configuracion extends AppCompatActivity {
 
     public void anadirContacto(View view) {
 
-        Intent intent = new Intent(this, selecciona.class);
-        startActivityForResult(intent,SELECCIONA_CONTACTO);
+        Intent eligeContacto = new Intent(this, selecciona.class);
+        //startActivity(eligeContacto);
+        eligeContacto.putExtra("contacto", "Mayte");
+        startActivityForResult(eligeContacto,SELECCIONA_CONTACTO);
     }
 
     protected void onActivityResult(int requestCode, int resultCode,Intent data)

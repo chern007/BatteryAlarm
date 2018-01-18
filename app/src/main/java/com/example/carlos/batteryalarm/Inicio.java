@@ -69,7 +69,7 @@ public class Inicio extends AppCompatActivity {
         }
         c.close();
 
-        Toast.makeText(this, lista.get(0), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, lista.get(0), Toast.LENGTH_SHORT).show();
 
     }
 
