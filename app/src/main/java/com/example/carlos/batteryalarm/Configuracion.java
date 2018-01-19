@@ -34,16 +34,19 @@ public class Configuracion extends AppCompatActivity {
 
         String nuevoEmail = casillaNuevoEmail.getText().toString();
 
+        if(charNumber(actualesEmail,';') < 2) {
+            if (actualesEmail.equals("")) {
+                actualesEmail += " " + nuevoEmail;
+            } else {
+                actualesEmail += ";\n " + nuevoEmail;
+            }
 
-        if (actualesEmail.equals("")){
-            actualesEmail += " " + nuevoEmail;
+            listaEmails.setText(actualesEmail);
+
+            casillaNuevoEmail.setText("");
         }else{
-            actualesEmail += "; " + nuevoEmail;
+            Toast.makeText(this, "borrar en contenido del cuadro", Toast.LENGTH_SHORT).show();
         }
-
-        listaEmails.setText(actualesEmail);
-
-        casillaNuevoEmail.setText("");
 
     }
 
@@ -73,17 +76,36 @@ public class Configuracion extends AppCompatActivity {
 
         String contactosActuales = listaContactos.getText().toString();
 
-        if (contactosActuales.equals("")){
-            contactosActuales += " " + nombreContacto + " (" + numeroTelefono + ")";
-        }else{
-            contactosActuales += ";\n " + nombreContacto + " (" + numeroTelefono + ")";
-        }
+        if(charNumber(contactosActuales,';') < 2) {
+            if (contactosActuales.equals("")) {
+                contactosActuales += " " + nombreContacto + " (" + numeroTelefono + ")";
+            } else {
+                contactosActuales += ";\n " + nombreContacto + " (" + numeroTelefono + ")";
+            }
 
-        listaContactos.setText(contactosActuales);
-        casillaNuevoContacto.setText("");
+            listaContactos.setText(contactosActuales);
+            casillaNuevoContacto.setText("");
+
+        }else{
+            Toast.makeText(this, "borrar en contenido del cuadro", Toast.LENGTH_SHORT).show();
+        }
 
 
     }
+
+
+    public int charNumber(String s, char patron) {
+
+        int counter = 0;
+        for( int i=0; i<s.length(); i++ ) {
+            if( s.charAt(i) == patron ) {
+                counter++;
+            }
+        }
+
+        return counter;
+    }
+
 
 
 }

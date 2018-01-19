@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -64,6 +65,10 @@ public class selecciona extends AppCompatActivity implements ListView.OnItemClic
         }
         cur.close();//cerramos el cursor
 
+
+        //ordenamos la lista alfabeticamente
+        Collections.sort(lista_contactos);
+
         //planchamos la lista de strings en el elemento ListView
         ListView l = (ListView) findViewById(R.id.lstContactos);
         l.setAdapter(new ArrayAdapter<String>(this, R.layout.fila_lista, lista_contactos));
@@ -115,12 +120,5 @@ public class selecciona extends AppCompatActivity implements ListView.OnItemClic
         setResult(RESULT_OK,i);
         finish();
     }
-
-
-    public void buscarContacto(View view) {
-
-
-    }
-
 
 }

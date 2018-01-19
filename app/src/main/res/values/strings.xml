@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">BatteryAlarm</string>
-    <string name="hintTelefonos"><i>Introduce un nombre...</i></string>
-    <string name="hintEmails"><i>Introduce un email...</i></string>
+    <string name="hintTelefonos"><i> Introduce un nombre...</i></string>
+    <string name="hintEmails"><i> Introduce un email...</i></string>
 </resources>
