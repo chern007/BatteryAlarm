@@ -11,7 +11,7 @@
         android:layout_width="208dp"
         android:layout_height="23dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="7dp"
         android:text="Números de Teléfono:"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtPorcentaje"
@@ -59,7 +59,7 @@
         android:editable="false"
         android:ems="10"
         android:inputType="none"
-        app:layout_constraintLeft_toLeftOf="@+id/txtTelf"
+        app:layout_constraintLeft_toLeftOf="@+id/lblTelefonos"
         app:layout_constraintTop_toBottomOf="@+id/txtTelf" />
 
     <Button
@@ -68,19 +68,27 @@
         android:layout_height="48dp"
         android:onClick="anadirEmail"
         android:text="Añadir"
-        app:layout_constraintLeft_toRightOf="@+id/txtEmail"
+        app:layout_constraintTop_toTopOf="@+id/txtEmail"
+        android:layout_marginStart="8dp"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtEmail" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="0dp" />
 
     <EditText
         android:id="@+id/txtTelf"
-        android:layout_width="245dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/borde"
         android:elevation="1dp"
         android:ems="10"
+        android:hint="@string/hintTelefonos"
         android:inputType="textPersonName"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/btAnadirTelf"
         app:layout_constraintTop_toBottomOf="@+id/lblTelefonos"
@@ -97,14 +105,19 @@
 
     <EditText
         android:id="@+id/txtEmail"
-        android:layout_width="255dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/borde"
         android:ems="10"
+        android:hint="@string/hintEmails"
         android:inputType="textPersonName"
-        app:layout_constraintLeft_toLeftOf="@+id/lblEmails"
+        android:textColorHint="@android:color/darker_gray"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/btAnadirEmail"
         app:layout_constraintTop_toBottomOf="@+id/lblEmails" />
 
@@ -114,9 +127,10 @@
         android:layout_height="48dp"
         android:onClick="anadirContacto"
         android:text="Añadir"
-        app:layout_constraintLeft_toRightOf="@+id/txtTelf"
+        app:layout_constraintTop_toTopOf="@+id/txtTelf"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtTelf" />
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="8dp" />
 
     <EditText
         android:id="@+id/mtxtEmails"
@@ -129,4 +143,5 @@
         android:inputType="none"
         app:layout_constraintLeft_toLeftOf="@+id/mtxtTelefonos"
         app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+
 </android.support.constraint.ConstraintLayout>

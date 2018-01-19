@@ -9,10 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,50 +67,51 @@ public class selecciona extends AppCompatActivity implements ListView.OnItemClic
         //planchamos la lista de strings en el elemento ListView
         ListView l = (ListView) findViewById(R.id.lstContactos);
         l.setAdapter(new ArrayAdapter<String>(this, R.layout.fila_lista, lista_contactos));
-        l.setOnItemClickListener(this);
-
+        l.setOnItemClickListener(this);//añdimos el listener
 
     }
 
 
     public void onItemClick(AdapterView<?> a, View view, int position, long id) {
 
-        Toast.makeText(this, a.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
-//
-//        String nombreElegido = a.getItemAtPosition(position).toString();
-//        Toast.makeText(this, nombreElegido, Toast.LENGTH_SHORT).show();
-//
-//        String proyeccion[]={ContactsContract.Contacts._ID};
-//        String filtro=ContactsContract.Contacts.DISPLAY_NAME + " = ?";
-//        String args_filtro[]={nombreElegido};
-//
-//        List<String> lista_contactos=new ArrayList<String>();
-//        cr = getContentResolver();
-//        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,proyeccion, filtro, args_filtro, null);
-//        if (cur.getCount() > 0) {
-//            while (cur.moveToNext()) {
-//                String identificador = cur.getString(
-//                        cur.getColumnIndex(ContactsContract.Contacts._ID));
-//                EnviarSMS(identificador);
-//            }
-//        }
-//        cur.close();
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+        //sacamos el nombre del elemento seleccionado de la lista
+        String nombreElegido = a.getItemAtPosition(position).toString();
+        String identificador = "";
+        int existeTelefono = 0;
+
+        //preparamos el filtro
+        String proyeccion[]={ContactsContract.Contacts._ID, ContactsContract.Contacts.HAS_PHONE_NUMBER};
+        String filtro=ContactsContract.Contacts.DISPLAY_NAME + " = ?";
+        String args_filtro[]={nombreElegido};
+
+        //guardamos en un listado el resultado de la consulta al contente provider El resultado será de 1 elemento
+        List<String> lista_contactos=new ArrayList<String>();
+        cr = getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,proyeccion, filtro, args_filtro, null);
+        if (cur.getCount() > 0) {
+            while (cur.moveToNext()) {
+                identificador = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                existeTelefono = Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)));
+            }
+        }
+        cur.close();//cerramos el cursor
+
+        // obtenemos el numero de movil
+        String numeroMovil = null;
+        if (existeTelefono > 0) {
+            Cursor cp = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{identificador}, null);
+            if (cp != null && cp.moveToFirst()) {
+                numeroMovil = cp.getString(cp.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                numeroMovil.replace(" ", "");
+                cp.close();
+            }
+        }
+
+
         //creamos un intent para pasar los datos al otro activity
         Intent i=new Intent();
         i.putExtra("contactoElegido",a.getItemAtPosition(position).toString());
+        i.putExtra("contactoElegidoNumero",numeroMovil);
         setResult(RESULT_OK,i);
         finish();
     }

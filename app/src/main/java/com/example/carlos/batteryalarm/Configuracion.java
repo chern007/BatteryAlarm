@@ -1,11 +1,11 @@
 package com.example.carlos.batteryalarm;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 public class Configuracion extends AppCompatActivity {
 
@@ -13,6 +13,8 @@ public class Configuracion extends AppCompatActivity {
 
     EditText listaEmails;
     EditText casillaNuevoEmail;
+    EditText listaContactos;
+    EditText casillaNuevoContacto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,8 @@ public class Configuracion extends AppCompatActivity {
 
         listaEmails = (EditText) findViewById(R.id.mtxtEmails);
         casillaNuevoEmail = (EditText) findViewById(R.id.txtEmail);
+        listaContactos = (EditText) findViewById(R.id.mtxtTelefonos);
+        casillaNuevoContacto = (EditText) findViewById(R.id.txtTelf);
 
     }
 
@@ -32,7 +36,7 @@ public class Configuracion extends AppCompatActivity {
 
 
         if (actualesEmail.equals("")){
-            actualesEmail += nuevoEmail;
+            actualesEmail += " " + nuevoEmail;
         }else{
             actualesEmail += "; " + nuevoEmail;
         }
@@ -47,21 +51,38 @@ public class Configuracion extends AppCompatActivity {
     public void anadirContacto(View view) {
 
         Intent eligeContacto = new Intent(this, selecciona.class);
-        //startActivity(eligeContacto);
-        eligeContacto.putExtra("contacto", "Mayte");
+        eligeContacto.putExtra("contacto", casillaNuevoContacto.getText().toString());
         startActivityForResult(eligeContacto,SELECCIONA_CONTACTO);
     }
 
     protected void onActivityResult(int requestCode, int resultCode,Intent data)
     {
-        String nombreContacto;
+        String nombreContacto=null;
+        String numeroTelefono=null;
 
         if (requestCode == SELECCIONA_CONTACTO) {
             if (resultCode == RESULT_OK) {
                 // se seleccionó correctamente el contacto
-                nombreContacto = data.getStringExtra("NOMBRE");
+                nombreContacto = data.getStringExtra("contactoElegido");
+                numeroTelefono = data.getStringExtra("contactoElegidoNumero");
+
+                Toast.makeText(this, nombreContacto + " - " + numeroTelefono, Toast.LENGTH_SHORT).show();
+
             }
         }
+
+        String contactosActuales = listaContactos.getText().toString();
+
+        if (contactosActuales.equals("")){
+            contactosActuales += " " + nombreContacto + " (" + numeroTelefono + ")";
+        }else{
+            contactosActuales += ";\n " + nombreContacto + " (" + numeroTelefono + ")";
+        }
+
+        listaContactos.setText(contactosActuales);
+        casillaNuevoContacto.setText("");
+
+
     }
 
 
