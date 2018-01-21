@@ -65,14 +65,14 @@
 
     <EditText
         android:id="@+id/txtPorcentaje"
-        android:layout_width="92dp"
+        android:layout_width="40dp"
         android:layout_height="39dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/borde"
         android:ems="10"
-        android:hint=" %"
+        android:gravity="center"
         android:imeOptions="actionDone"
-        android:inputType="textPersonName"
+        android:inputType="number"
         app:layout_constraintLeft_toLeftOf="@+id/lblPorcentaje"
         app:layout_constraintTop_toBottomOf="@+id/lblPorcentaje" />
 
@@ -202,5 +202,16 @@
         android:id="@+id/guideline"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:text="%"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toRightOf="@+id/txtPorcentaje"
+        app:layout_constraintTop_toTopOf="@+id/txtPorcentaje"
+        android:layout_marginTop="8dp" />
 
 </android.support.constraint.ConstraintLayout>

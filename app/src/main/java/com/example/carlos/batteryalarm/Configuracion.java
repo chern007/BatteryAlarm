@@ -40,8 +40,17 @@ public class Configuracion extends AppCompatActivity {
     }
 
     public void guardarConfiguracion(View view){
+
+        //vemos si esta vacio y cambiamos el valor del umbral para que no de error la consulta
+        String tmp = null;
+        if (umbral.getText().toString().equals("")){
+            tmp = "0";
+        }else{
+            tmp = umbral.getText().toString();
+        }
+
         //añadimos una fila a la tabla
-        Inicio.db.execSQL("INSERT INTO configuracionesT3 (ID, umbral, lista_contactos, liata_emails) VALUES ('tarea3'," + umbral.getText() + ", '"+ listaContactos.getText() + "', '"+ listaEmails.getText() + "');" );
+        Inicio.db.execSQL("INSERT OR REPLACE INTO configuracionesT3 (ID, umbral, lista_contactos, liata_emails) VALUES ('tarea3'," + tmp + ", '"+ listaContactos.getText() + "', '"+ listaEmails.getText() + "');" );
 
         Toast.makeText(this, "Se ha guardado la configuración.", Toast.LENGTH_SHORT).show();
     }
@@ -186,7 +195,12 @@ public class Configuracion extends AppCompatActivity {
             while(c.moveToNext()){
                 if (c.getString(0).equals("tarea3")){
 
-                    umbral.setText(c.getString(1));
+                    //ponemos los valores en el formulario
+                    if (!c.getString(1).equals("0")){
+                        umbral.setText(c.getString(1));
+                    }else{
+                        umbral.setText("");
+                    }
                     listaContactos.setText(c.getString(2));
                     listaEmails.setText(c.getString(3));
 
