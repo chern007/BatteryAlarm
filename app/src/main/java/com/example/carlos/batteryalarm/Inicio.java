@@ -21,8 +21,10 @@ import java.util.List;
 public class Inicio extends AppCompatActivity {
 
     private TextView batteryTxt;
-    SQLiteDatabase db;
-
+    public static SQLiteDatabase db;
+    public static int umbral;
+    public static List<String> listaContactos = new ArrayList<>();
+    public static List<String> listaEmails = new ArrayList<>();
 
 
 
@@ -37,13 +39,14 @@ public class Inicio extends AppCompatActivity {
         this.registerReceiver(this.mBatInfoReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
         //creamos la base de datos Tarea3
+        //deleteDatabase("Tarea3");//para borrar la base de datos
         db=openOrCreateDatabase("Tarea3", Context.MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS configuracionesT3(emails VARCHAR,telf INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS configuracionesT3(ID TEXT, umbral INT,lista_contactos TEXT, liata_emails TEXT);");
 
-        //añadimos una fila a la tabla
-        db.execSQL("INSERT INTO configuracionesT3 VALUES ('carloshernandezcrespo@gmail.com',638844416)");
+//        //añadimos una fila a la tabla
+//        db.execSQL("INSERT INTO configuracionesT3 VALUES ('carloshernandezcrespo@gmail.com',638844416)");
 
-        Listar();
+
 
     }
 
@@ -52,27 +55,13 @@ public class Inicio extends AppCompatActivity {
         @Override
         public void onReceive(Context ctxt, Intent intent) {
             int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-            batteryTxt.setText("Nivel de Bateria actual: " + String.valueOf(level) + "%");
+            batteryTxt.setText("Nivel de Batería actual: " + String.valueOf(level) + "%");
 
         }
     };
 
-    public void Listar(){
 
-        List<String> lista = new ArrayList<String>();
-        Cursor c=db.rawQuery("SELECT * FROM configuracionesT3", null);
-        if(c.getCount()==0)
-            lista.add("No hay registros");
-        else{
-            while(c.moveToNext())
-                lista.add(c.getString(0)+"-"+c.getInt(1));
-        }
-        c.close();
-
-        Toast.makeText(this, lista.get(0), Toast.LENGTH_SHORT).show();
-
-    }
-
+    //pasamos a la actividad de configuracion
     public void configurar(View view) {
         Intent configura = new Intent(this, Configuracion.class);
 

@@ -6,6 +6,41 @@
     android:layout_height="match_parent"
     tools:context="com.example.carlos.batteryalarm.Configuracion">
 
+    <Button
+        android:id="@+id/btResetearEmails"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="9dp"
+        android:layout_weight="1.0"
+        android:background="@color/dialogoOK"
+        android:onClick="borrarEmails"
+        android:text="Resetear emails"
+        app:layout_constraintBottom_toBottomOf="@+id/btResetearContactos"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/btResetearContactos"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_weight="1.0"
+        android:background="@color/dialogoOK"
+        android:onClick="borrarContactos"
+        android:text="Resetear contactos"
+        app:layout_constraintBottom_toTopOf="@+id/btGuarda"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/guideline" />
+
     <TextView
         android:id="@+id/lblTelefonos"
         android:layout_width="208dp"
@@ -35,6 +70,8 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/borde"
         android:ems="10"
+        android:hint=" %"
+        android:imeOptions="actionDone"
         android:inputType="textPersonName"
         app:layout_constraintLeft_toLeftOf="@+id/lblPorcentaje"
         app:layout_constraintTop_toBottomOf="@+id/lblPorcentaje" />
@@ -43,25 +80,33 @@
         android:id="@+id/btGuarda"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="9dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:background="@color/dialogoAcept"
+        android:onClick="guardarConfiguracion"
         android:text="Guardar Configuración"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mtxtEmails" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
         android:id="@+id/mtxtTelefonos"
-        android:layout_width="344dp"
+        android:layout_width="0dp"
         android:layout_height="80dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/borde"
         android:editable="false"
         android:ems="10"
+        android:gravity="top|left"
         android:inputType="none"
         app:layout_constraintLeft_toLeftOf="@+id/lblTelefonos"
-        app:layout_constraintTop_toBottomOf="@+id/txtTelf" />
+        app:layout_constraintTop_toBottomOf="@+id/txtTelf"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        android:layout_marginEnd="8dp" />
 
     <Button
         android:id="@+id/btAnadirEmail"
@@ -70,16 +115,15 @@
         android:onClick="anadirEmail"
         android:text="Añadir"
         app:layout_constraintTop_toTopOf="@+id/txtEmail"
-        android:layout_marginStart="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="0dp" />
+        android:layout_marginEnd="8dp" />
 
     <EditText
         android:id="@+id/txtTelf"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
@@ -88,6 +132,7 @@
         android:elevation="1dp"
         android:ems="10"
         android:hint="@string/hintTelefonos"
+        android:imeOptions="actionDone"
         android:inputType="textPersonName"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -108,6 +153,7 @@
         android:id="@+id/txtEmail"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
@@ -115,6 +161,7 @@
         android:background="@drawable/borde"
         android:ems="10"
         android:hint="@string/hintEmails"
+        android:imeOptions="actionDone"
         android:inputType="textPersonName"
         android:textColorHint="@android:color/darker_gray"
         app:layout_constraintHorizontal_bias="0.0"
@@ -130,19 +177,30 @@
         android:text="Añadir"
         app:layout_constraintTop_toTopOf="@+id/txtTelf"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp" />
 
     <EditText
         android:id="@+id/mtxtEmails"
-        android:layout_width="344dp"
+        android:layout_width="0dp"
         android:layout_height="80dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/borde"
         android:editable="false"
         android:ems="10"
+        android:gravity="top|left"
         android:inputType="none"
         app:layout_constraintLeft_toLeftOf="@+id/mtxtTelefonos"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="8dp" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 </android.support.constraint.ConstraintLayout>

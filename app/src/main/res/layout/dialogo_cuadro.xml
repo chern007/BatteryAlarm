@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/dialog_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/borrarContactos" />
+
+    <LinearLayout
+        android:layout_below="@+id/dialog_info"
+        android:layout_alignParentStart="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/dialog_ok"
+            android:layout_width="0.0dip" android:layout_height="fill_parent"
+            android:background="@color/dialogoAcept"
+            android:text="OK"
+            android:layout_weight="1.0"/>
+
+        <Button
+            android:id="@+id/btCancelar"
+            android:layout_width="0.0dip" android:layout_height="fill_parent"
+            android:background="@color/dialogoCancel"
+            android:text="Cancelar"
+            android:layout_weight="1.0"/>
+
+
+    </LinearLayout>
+</RelativeLayout>
