@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context="com.example.carlos.batteryalarm.selecciona">
+    tools:context="com.example.carlos.batteryalarm.Selecciona">
 
 
     <ListView

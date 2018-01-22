@@ -1,7 +1,9 @@
 package com.example.carlos.batteryalarm;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -83,7 +85,7 @@ public class Configuracion extends AppCompatActivity {
 
     public void anadirContacto(View view) {
 
-        Intent eligeContacto = new Intent(this, selecciona.class);
+        Intent eligeContacto = new Intent(this, Selecciona.class);
         eligeContacto.putExtra("contacto", casillaNuevoContacto.getText().toString());
         startActivityForResult(eligeContacto, SELECCIONA_CONTACTO);
     }
@@ -177,7 +179,7 @@ public class Configuracion extends AppCompatActivity {
     }
 
 
-    //metodo que ejecuta el lsitener del boton borrar contactos
+    //metodo que ejecuta el listener del boton borrar contactos
     public void borrarContactos(View view) {
         borrarAlmacenados("contactos");
     }
@@ -186,6 +188,8 @@ public class Configuracion extends AppCompatActivity {
         borrarAlmacenados("emails");
     }
 
+
+    //metodo que actualiza el formulario de configuracion con los datos almacenados en SQLite
     public void actualizar (){
 
         List<String> lista = new ArrayList<String>();
@@ -214,5 +218,9 @@ public class Configuracion extends AppCompatActivity {
         //Toast.makeText(this, lista.get(0), Toast.LENGTH_SHORT).show();
 
     }
+
+
+
+
 
 }

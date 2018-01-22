@@ -19,7 +19,7 @@ import java.util.List;
  * Created by Carlos on 17/01/2018.
  */
 
-public class selecciona extends AppCompatActivity implements ListView.OnItemClickListener {
+public class Selecciona extends AppCompatActivity implements ListView.OnItemClickListener {
 
     ListView listaSeleccion;
     String nombreFiltro;
