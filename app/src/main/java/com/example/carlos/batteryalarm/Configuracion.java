@@ -98,6 +98,8 @@ public class Configuracion extends AppCompatActivity {
                 nombreContacto = data.getStringExtra("contactoElegido");
                 numeroTelefono = data.getStringExtra("contactoElegidoNumero");
 
+                numeroTelefono = numeroTelefono.replace(" ","");//le quitamos los espacios
+
                 Toast.makeText(this, nombreContacto + " - " + numeroTelefono, Toast.LENGTH_SHORT).show();
 
             }
@@ -115,7 +117,7 @@ public class Configuracion extends AppCompatActivity {
             listaContactos.setText(contactosActuales);
             casillaNuevoContacto.setText("");
 
-        } else {
+        } else if (charNumber(contactosActuales, ';') == 2){
 
             borrarAlmacenados("contactos");
 
