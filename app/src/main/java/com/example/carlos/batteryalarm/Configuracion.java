@@ -66,7 +66,7 @@ public class Configuracion extends AppCompatActivity {
 
         if (charNumber(actualesEmail, ';') < 2 && !nuevoEmail.equals("") && nuevoEmail != null) {
             if (actualesEmail.equals("")) {
-                actualesEmail += " " + nuevoEmail;
+                actualesEmail += nuevoEmail;
             } else {
                 actualesEmail += ";\n " + nuevoEmail;
             }
@@ -111,7 +111,7 @@ public class Configuracion extends AppCompatActivity {
 
         if (charNumber(contactosActuales, ';') < 2 && nombreContacto != null && numeroTelefono != null) {
             if (contactosActuales.equals("")) {
-                contactosActuales += " " + nombreContacto + " (" + numeroTelefono + ")";
+                contactosActuales += nombreContacto + " (" + numeroTelefono + ")";
             } else {
                 contactosActuales += ";\n " + nombreContacto + " (" + numeroTelefono + ")";
             }
