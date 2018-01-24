@@ -64,7 +64,7 @@ public class Inicio extends AppCompatActivity {
 
 
     //**********************************************************************************************
-    //creamos una clase interna que implemente "BroadcastReceiver"
+    //creamos una clase interna que herede "BroadcastReceiver"
     private class BateryLevelBroadcastReceiver extends BroadcastReceiver {
 
         @Override
@@ -119,7 +119,7 @@ public class Inicio extends AppCompatActivity {
         i.setType("message/rfc822");
         chooser = i.createChooser(i, "Enviar Email");
         try {
-            startActivity(i);
+            startActivity(chooser);//se inicia la actividad a través del chooser
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "Se ha producido un error al mandar el email.", Toast.LENGTH_SHORT).show();
         }
@@ -129,13 +129,17 @@ public class Inicio extends AppCompatActivity {
 
     public void EnviarSMS(String[] destinatarios, String contenido) {
 
-        try {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage("636340858", null, contenido, null, null);
-            Toast.makeText(getApplicationContext(), "SMS enviado.", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "SMS no enviado, por favor, inténtalo otra vez.", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+        //por cada número contenido en el array destinatarios, mandamos un SMS
+        for (String n : destinatarios) {
+
+            try {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(n, null, contenido, null, null);
+                Toast.makeText(getApplicationContext(), "SMS enviado.", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "SMS no enviado, por favor, inténtalo otra vez.", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
         }
     }
 
