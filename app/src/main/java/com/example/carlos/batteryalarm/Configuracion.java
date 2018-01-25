@@ -68,7 +68,7 @@ public class Configuracion extends AppCompatActivity {
             if (actualesEmail.equals("")) {
                 actualesEmail += nuevoEmail;
             } else {
-                actualesEmail += ";\n " + nuevoEmail;
+                actualesEmail += ";\n" + nuevoEmail;
             }
 
             listaEmails.setText(actualesEmail);
@@ -113,7 +113,7 @@ public class Configuracion extends AppCompatActivity {
             if (contactosActuales.equals("")) {
                 contactosActuales += nombreContacto + " (" + numeroTelefono + ")";
             } else {
-                contactosActuales += ";\n " + nombreContacto + " (" + numeroTelefono + ")";
+                contactosActuales += ";\n" + nombreContacto + " (" + numeroTelefono + ")";
             }
 
             listaContactos.setText(contactosActuales);

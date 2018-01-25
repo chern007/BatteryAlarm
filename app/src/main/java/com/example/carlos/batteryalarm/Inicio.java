@@ -13,12 +13,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class Inicio extends AppCompatActivity {
 
     private TextView batteryTxt;
+    private CheckBox chkSMS;
+    private CheckBox chkEmail;
     public static SQLiteDatabase db;
     public static int umbral;
     public static String[] listaContactos;
@@ -36,8 +39,6 @@ public class Inicio extends AppCompatActivity {
 
         recuperaDatos();//recuperamos los datos desde SQLite
 
-        registerReceiver(bateryLevelBroadcastReceiver, bateryIntentFilter);
-
     }
 
 
@@ -47,6 +48,8 @@ public class Inicio extends AppCompatActivity {
         setContentView(R.layout.activity_inicio);
 
         batteryTxt = (TextView) findViewById(R.id.txtBateria);
+        chkSMS = (CheckBox) findViewById(R.id.chkSMS);
+        chkEmail = (CheckBox) findViewById(R.id.chkEmail);
 
         //creamos la base de datos Tarea3
         //deleteDatabase("Tarea3");//para borrar la base de datos
@@ -59,6 +62,9 @@ public class Inicio extends AppCompatActivity {
         bateryIntentFilter = new IntentFilter();
         bateryIntentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
         bateryLevelBroadcastReceiver = new BateryLevelBroadcastReceiver();
+
+        //iniciamos el listener "BroadcastReceiver"
+        registerReceiver(bateryLevelBroadcastReceiver, bateryIntentFilter);
 
     }
 
@@ -79,23 +85,46 @@ public class Inicio extends AppCompatActivity {
     //metodo perteneciente a la clase principal que cambia el porcentaje y además manda las alertas
     private void cambiaPorcentaje(int porcentaje) {
 
+
+
         batteryTxt.setText("Nivel de Batería actual: " + String.valueOf(porcentaje) + "%");
 
          if (porcentaje < umbral) {
 
-            Toast.makeText(this, "La bateria esta por debajo del umbral!!!", Toast.LENGTH_SHORT).show();
 
-            //***Envio de AVISOS***
-            //EnviarSMS();
-            //enviarMail("carloshernandezcrespo@gmail.com","Probando","Esto es una prueba.");
+
+             //***Envio de AVISOS***
+
+             if (chkSMS.isChecked() && (listaContactos != null && !listaContactos[0].equals(""))){
+                 //enviarSMS(listaContactos, "ALARMA: El nivel de batería actual del dispositivo es de un " + porcentaje + "%");
+                 Toast.makeText(this, "SMSs enviados.", Toast.LENGTH_SHORT).show();
+             }
+             if (chkEmail.isChecked() && (listaEmails != null && !listaEmails[0].equals(""))){
+                 enviarMail(listaEmails,"ALARMA: Nivel de batería.","ALARMA: El nivel de batería actual del dispositivo es de un " + porcentaje + "%");
+                 Toast.makeText(this, "Emails enviados.", Toast.LENGTH_SHORT).show();
+             }
+
+             //cerramos el listener BroadcastReceiver para que no siga atendiendo los intent de cambio de nivel de bateria
+             unregisterReceiver(bateryLevelBroadcastReceiver);
         }
 
-        //cerramos para que no siga atendiendo los intent de cambio de nivel de bateria
-        unregisterReceiver(bateryLevelBroadcastReceiver);
+
 
     }
     //**********************************************************************************************
 
+    public void informacionBateria (View view){
+        //***Envio de AVISOS***
+
+        if (chkSMS.isChecked() && (listaContactos != null && !listaContactos[0].equals(""))){
+            enviarSMS(listaContactos, "INFORMACION: El nivel de batería actual del dispositivo es de un " + batteryTxt.getText().toString().replace("Nivel de Batería actual: ",""));
+            Toast.makeText(this, "SMSs enviados.", Toast.LENGTH_SHORT).show();
+        }
+        if (chkEmail.isChecked() && (listaEmails != null && !listaEmails[0].equals(""))){
+            enviarMail(listaEmails,"INFORMACION: Nivel de batería.","INFORMACION: El nivel de batería actual del dispositivo es de un " + batteryTxt.getText().toString().replace("Nivel de Batería actual: ",""));
+            Toast.makeText(this, "Emails enviados.", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
     //pasamos a la actividad de configuracion
@@ -105,9 +134,27 @@ public class Inicio extends AppCompatActivity {
         startActivity(configura);
     }
 
+
+    public void enviarSMS(String[] destinatarios, String contenido) {
+
+        //por cada número contenido en el array destinatarios, mandamos un SMS
+        for (String n : destinatarios) {
+
+            try {
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(n, null, contenido, null, null);
+                Toast.makeText(getApplicationContext(), "SMS enviado.", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "SMS no enviado, por favor, inténtalo otra vez.", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     public void enviarMail(String[] destinatarios, String asunto, String contenido) {
 
-        Intent chooser = null;
+        Intent chooser;
         Intent i = new Intent();
 
         i.setAction(Intent.ACTION_SEND);
@@ -126,22 +173,6 @@ public class Inicio extends AppCompatActivity {
 
     }
 
-
-    public void EnviarSMS(String[] destinatarios, String contenido) {
-
-        //por cada número contenido en el array destinatarios, mandamos un SMS
-        for (String n : destinatarios) {
-
-            try {
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(n, null, contenido, null, null);
-                Toast.makeText(getApplicationContext(), "SMS enviado.", Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "SMS no enviado, por favor, inténtalo otra vez.", Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            }
-        }
-    }
 
     public void recuperaDatos() {
         Cursor c = db.rawQuery("SELECT * FROM configuracionesT3 WHERE ID = 'tarea3'", null);
@@ -176,4 +207,6 @@ public class Inicio extends AppCompatActivity {
 
 }
 
-
+//        Intent openMainActivity= new Intent(TerceraActiviry.this, Main.class));
+//        openMainActivity.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//        startActivityIfNeeded(openMainActivity, 0);
