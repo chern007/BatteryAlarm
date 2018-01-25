@@ -91,12 +91,10 @@ public class Inicio extends AppCompatActivity {
 
          if (porcentaje < umbral) {
 
-
-
              //***Envio de AVISOS***
 
              if (chkSMS.isChecked() && (listaContactos != null && !listaContactos[0].equals(""))){
-                 //enviarSMS(listaContactos, "ALARMA: El nivel de batería actual del dispositivo es de un " + porcentaje + "%");
+                 enviarSMS(listaContactos, "ALARMA: El nivel de batería actual del dispositivo es de un " + porcentaje + "%");
                  Toast.makeText(this, "SMSs enviados.", Toast.LENGTH_SHORT).show();
              }
              if (chkEmail.isChecked() && (listaEmails != null && !listaEmails[0].equals(""))){
