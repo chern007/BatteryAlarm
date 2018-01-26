@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class Inicio extends AppCompatActivity {
     public static int umbral;
     public static String[] listaContactos;
     public static String[] listaEmails;
+    private ImageView imgPila;
 
     //variables relativas al "BroadcastReceiver"
     private IntentFilter bateryIntentFilter;
@@ -39,8 +41,9 @@ public class Inicio extends AppCompatActivity {
 
         recuperaDatos();//recuperamos los datos desde SQLite
 
-    }
+        imgPila.setImageResource(getResources().getIdentifier("pila_75", "drawable",  getPackageName()));
 
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class Inicio extends AppCompatActivity {
         batteryTxt = (TextView) findViewById(R.id.txtBateria);
         chkSMS = (CheckBox) findViewById(R.id.chkSMS);
         chkEmail = (CheckBox) findViewById(R.id.chkEmail);
+        imgPila = (ImageView) findViewById(R.id.imgPila);
 
         //creamos la base de datos Tarea3
         //deleteDatabase("Tarea3");//para borrar la base de datos

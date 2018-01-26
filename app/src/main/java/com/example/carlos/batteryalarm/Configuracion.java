@@ -1,12 +1,12 @@
 package com.example.carlos.batteryalarm;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,6 +39,28 @@ public class Configuracion extends AppCompatActivity {
 
         actualizar();//actualizamos el formulario con los datos guardados
 
+    }
+
+    //creamos el metodo que infla la barra de menus
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_alarm_battery,menu);//inflamos la barra de menus
+        return super.onCreateOptionsMenu(menu);
+
+    }
+    //creamos el método listener que captura el evento pulsacion de los botones del menu
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.mnAtras){
+
+            finish();//cerramos la actividad y pasaremos a la anterior directamente
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void guardarConfiguracion(View view){

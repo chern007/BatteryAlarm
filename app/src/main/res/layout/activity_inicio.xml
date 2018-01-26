@@ -74,4 +74,20 @@
         app:layout_constraintLeft_toRightOf="@+id/chkSMS"
         app:layout_constraintTop_toTopOf="@+id/chkSMS" />
 
+    <ImageView
+        android:id="@+id/imgPila"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="68dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="68dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btConfigurar"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/dead_battery" />
+
 </android.support.constraint.ConstraintLayout>
