@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 public class Inicio extends AppCompatActivity {
 
+    private int nivelBateria;
     private TextView batteryTxt;
     private CheckBox chkSMS;
     private CheckBox chkEmail;
@@ -41,14 +42,16 @@ public class Inicio extends AppCompatActivity {
 
         recuperaDatos();//recuperamos los datos desde SQLite
 
-        imgPila.setImageResource(getResources().getIdentifier("pila_75", "drawable",  getPackageName()));
-
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher_round);
+        getSupportActionBar().setTitle("  Battery Alarm");
 
         batteryTxt = (TextView) findViewById(R.id.txtBateria);
         chkSMS = (CheckBox) findViewById(R.id.chkSMS);
@@ -80,8 +83,8 @@ public class Inicio extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            int porcentaje = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-            cambiaPorcentaje(porcentaje);
+            nivelBateria = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
+            cambiaPorcentaje(nivelBateria);
 
         }
     }
@@ -90,9 +93,21 @@ public class Inicio extends AppCompatActivity {
     private void cambiaPorcentaje(int porcentaje) {
 
 
-
+        //cambiamos el texto indicador
         batteryTxt.setText("Nivel de Batería actual: " + String.valueOf(porcentaje) + "%");
 
+        //cambiamos la imagen en funcion del porcentaje de bateria
+        if (porcentaje > 75){
+            imgPila.setImageResource(getResources().getIdentifier("pila_100", "drawable",  getPackageName()));
+        }else if (porcentaje > 50){
+            imgPila.setImageResource(getResources().getIdentifier("pila_75", "drawable",  getPackageName()));
+        }else if (porcentaje > 25){
+            imgPila.setImageResource(getResources().getIdentifier("pila_50", "drawable",  getPackageName()));
+        }else if (porcentaje > 10){
+            imgPila.setImageResource(getResources().getIdentifier("pila_25", "drawable",  getPackageName()));
+        }
+
+        //analizamos si tenemos que mandar las alertas
          if (porcentaje < umbral) {
 
              //***Envio de AVISOS***
@@ -145,7 +160,6 @@ public class Inicio extends AppCompatActivity {
             try {
                 SmsManager smsManager = SmsManager.getDefault();
                 smsManager.sendTextMessage(n, null, contenido, null, null);
-                Toast.makeText(getApplicationContext(), "SMS enviado.", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), "SMS no enviado, por favor, inténtalo otra vez.", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
